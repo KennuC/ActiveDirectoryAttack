@@ -1,5 +1,8 @@
 # ActiveDirectory
 
+## Network Diagram
+
+![NetworkDiagram drawio (1)](https://github.com/KennuC/ActiveDirectory/assets/131323586/20b517cc-4d41-40d2-9a9e-7fbeed98229a)
 
 ## Configuration and set up
 
