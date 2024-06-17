@@ -7,10 +7,9 @@ The Active Directory Attack project aims to create a realistic environment for s
 
 ### Skills Learned
 
-- Advanced understanding of Active Directory configurations and security implications.
-- Proficiency in using SIEM systems (like Splunk) for log ingestion and analysis.
-- Capability to perform network analysis using tools such as Wireshark.
-- Expertise in recognizing and responding to attack signatures and patterns.
+- Understanding of configuring Active Directory and security implications.
+- Proficiency in using SIEM tools (Splunk) for log ingestion and analysis.
+- Recognizing and responding to attack signatures and patterns.
 - Enhanced knowledge of network protocols, security vulnerabilities, and mitigation techniques.
 - Development of critical thinking and problem-solving skills in cybersecurity.
 
