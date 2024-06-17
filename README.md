@@ -37,7 +37,8 @@ Example below.
 
 ## Network Diagram
 
-![NetworkDiagram drawio (1)](https://github.com/KennuC/ActiveDirectory/assets/131323586/20b517cc-4d41-40d2-9a9e-7fbeed98229a)
+![NetworkDiagram drawio (3)](https://github.com/KennuC/ActiveDirectoryAttack/assets/131323586/90e3e58a-e85e-4940-bbd0-199265f30282)
+
 
 ## Configuration and set up
 
