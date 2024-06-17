@@ -1,82 +1,106 @@
-# ActiveDirectoryAttack
-
-<!--
-# ProjectTemplate
-# PROJECTNAME
+# Active Directory Attack
 
 ## Objective
-[Brief Objective - Remove this afterwards]
 
-The Detection Lab project aimed to establish a controlled environment for simulating and detecting cyber attacks. The primary focus was to ingest and analyze logs within a Security Information and Event Management (SIEM) system, generating test telemetry to mimic real-world attack scenarios. This hands-on experience was designed to deepen understanding of network security, attack patterns, and defensive strategies.
+The Active Directory Attack project aims to create a realistic environment for simulating and detecting cyber attacks within an Active Directory infrastructure. The primary focus is to utilize various tools and techniques to monitor, detect, and analyze attack patterns, improving overall network security knowledge and defensive strategies.
+
 
 ### Skills Learned
-[Bullet Points - Remove this afterwards]
 
-- Advanced understanding of SIEM concepts and practical application.
-- Proficiency in analyzing and interpreting network logs.
-- Ability to generate and recognize attack signatures and patterns.
-- Enhanced knowledge of network protocols and security vulnerabilities.
+- Advanced understanding of Active Directory configurations and security implications.
+- Proficiency in using SIEM systems (like Splunk) for log ingestion and analysis.
+- Capability to perform network analysis using tools such as Wireshark.
+- Expertise in recognizing and responding to attack signatures and patterns.
+- Enhanced knowledge of network protocols, security vulnerabilities, and mitigation techniques.
 - Development of critical thinking and problem-solving skills in cybersecurity.
 
 ### Tools Used
-[Bullet Points - Remove this afterwards]
 
-- Security Information and Event Management (SIEM) system for log ingestion and analysis.
-- Network analysis tools (such as Wireshark) for capturing and examining network traffic.
-- Telemetry generation tools to create realistic network traffic and attack scenarios.
-
-## Steps
-drag & drop screenshots here or use imgur and reference them using imgsrc
-
-Every screenshot should have some text explaining what the screenshot is about.
-
-Example below.
-
-*Ref 1: Network Diagram*
--->
+- **Splunk**: For log ingestion and real-time analysis of security events.
+- **Kali Linux**: For using Crowbar to brute-force through remote desktop.
+- **Atomic Red Team**: For simulating adversary techniques based on the MITRE ATT&CK framework.
+- **VirtualBox**: For setting up virtual machines to create a controlled lab environment.
+- **Domain Controller**: Windows Server 2022 for active directory.
+- **Sysmon**: For for system monitoring logs that will be forwarded to splunk.
 
 ## Network Diagram
 
-![NetworkDiagram drawio (3)](https://github.com/KennuC/ActiveDirectoryAttack/assets/131323586/90e3e58a-e85e-4940-bbd0-199265f30282)
+![NetworkDiagram](https://github.com/KennuC/ActiveDirectoryAttack/assets/131323586/90e3e58a-e85e-4940-bbd0-199265f30282)
 
+*Ref 1: Network Diagram*
 
-## Configuration and set up
+## Steps
 
-For Windows Target and Domain Controller machine, instucting Splunk Forwarder to push events related to Application, Security, and System to splunk server.
-![image](https://github.com/KennuC/ActiveDirectory/assets/131323586/b7aa0b6e-ae6f-4941-9f88-aa55feee131f)
+### Configuring Splunk Forwarder on Windows Target and Domain Controller
 
-Adding Active Directory Domain Service feature on Domain Controller machine
-![image](https://github.com/KennuC/ActiveDirectory/assets/131323586/9a63f0c5-b585-435d-859e-24c8c0cececd)
+Instructing the Splunk Forwarder to push events related to Application, Security, and System logs to the Splunk server.
+![Splunk Forwarder Configuration](https://github.com/KennuC/ActiveDirectory/assets/131323586/b7aa0b6e-ae6f-4941-9f88-aa55feee131f)
+*Ref 2: Splunk Forwarder Configuration*
 
+### Adding Active Directory Domain Services
 
-Generic Names in new Organizaitonal Units IT & HR
-![image](https://github.com/KennuC/ActiveDirectory/assets/131323586/c080c7fc-0de6-4ae8-a890-a5b6ea471a0a)
-![image](https://github.com/KennuC/ActiveDirectory/assets/131323586/73837024-f6bf-4a5c-8c49-b13b44cf5726)
+Setting up the Active Directory Domain Services feature on the Domain Controller machine.
+![Active Directory Setup](https://github.com/KennuC/ActiveDirectory/assets/131323586/9a63f0c5-b585-435d-859e-24c8c0cececd)
+*Ref 3: Active Directory Setup*
 
-Adding Windows10Target machine onto the kennu.local Domain
+### Creating Organizational Units
 
-![image](https://github.com/KennuC/ActiveDirectory/assets/131323586/b09fe2ee-d5f4-47ac-a014-e6e6895badd9)
+Creating new Organizational Units (OUs) named IT and HR with generic names for users.
+![Organizational Units - IT & HR](https://github.com/KennuC/ActiveDirectory/assets/131323586/c080c7fc-0de6-4ae8-a890-a5b6ea471a0a)
+*Ref 4: Organizational Units - IT & HR*
+![Organizational Units - IT & HR](https://github.com/KennuC/ActiveDirectory/assets/131323586/73837024-f6bf-4a5c-8c49-b13b44cf5726)
+*Ref 5: Organizational Units - IT & HR (Cont.)*
 
-Logging onto other user on Windows10Target machines shows that it will log in to the domain KENNU
-![image](https://github.com/KennuC/ActiveDirectory/assets/131323586/4d961621-2743-4c6f-b1df-e3cbb59a0895)
+### Adding Windows10Target to the Domain
 
-Using crowbar on Kali to bruteforce an account on the Windows10Target machine via remote desktop with a custom password text file.
-![image](https://github.com/KennuC/ActiveDirectory/assets/131323586/7ab91d2a-4206-4e01-acfd-112daaaa7b90)
+Joining the Windows 10 Target machine to the `kennu.local` domain.
+![Windows 10 Domain Join](https://github.com/KennuC/ActiveDirectory/assets/131323586/b09fe2ee-d5f4-47ac-a014-e6e6895badd9)
 
-Using splunk query 'index="endpoint" sourcetype="WinEventLog:Security" jsmith' and identifying the top EventCode of 4625 with 60 counts of events, after research this event is generated when a logon request fails.
-![image](https://github.com/KennuC/ActiveDirectory/assets/131323586/36b960cc-326d-4574-87c3-5fd0bd8634bc)
+*Ref 6: Windows 10 Domain Join*
 
-Adding the EventCode to the search to investigate the events. Show many failed login attempts occured within a few seconds, in indication of a potential brute-force attack
-![image](https://github.com/KennuC/ActiveDirectory/assets/131323586/f0e890d9-74b5-4198-9f43-44cb9ce15989)
+### Domain Login Verification
 
-Changing the EventCode to 4624 for successful login attempt and investigating the event show that the workstation name is under kali as well as the IP address 10.0.2.4
-![image](https://github.com/KennuC/ActiveDirectory/assets/131323586/4c729ec7-a9d8-4b5b-8165-133a9a8f251b)
+Logging in to a different user account on the Windows 10 Target machine to verify domain integration.
+![Domain Login Verification](https://github.com/KennuC/ActiveDirectory/assets/131323586/4d961621-2743-4c6f-b1df-e3cbb59a0895)
+*Ref 7: Domain Login Verification*
 
-Using Atomic Red to replicate event logs, based on MITRE ATT&CK, selecting Command and Scripting Interpreter: PowerShell (ID: T1059.001)
-![image](https://github.com/KennuC/ActiveDirectory/assets/131323586/e96ad857-6836-42ae-b50e-92bbe918dfef)
+### Brute-force Attack Simulation Using Crowbar
 
-To see if the splunk server has logged this, we will search for an execute that has taken place for this instance '-exec bypass -noprofile'
-![image](https://github.com/KennuC/ActiveDirectory/assets/131323586/cc77567f-ff55-496f-878e-c92940765ac2)
-![image](https://github.com/KennuC/ActiveDirectory/assets/131323586/2429c5c8-53d3-401d-b6f7-8836cd3f62c3)
+Using Crowbar on Kali Linux to brute-force an account on the Windows 10 Target machine via Remote Desktop with a custom password list.
+![Crowbar Brute-force Attack](https://github.com/KennuC/ActiveDirectory/assets/131323586/7ab91d2a-4206-4e01-acfd-112daaaa7b90)
+
+*Ref 8: Crowbar Brute-force Attack*
+
+### Analyzing Failed Login Attempts in Splunk
+
+Using the Splunk query `index="endpoint" sourcetype="WinEventLog:Security" jsmith` to identify EventCode 4625, indicating failed login attempts.
+![Failed Login Attempts Analysis](https://github.com/KennuC/ActiveDirectory/assets/131323586/36b960cc-326d-4574-87c3-5fd0bd8634bc)
+*Ref 9: Failed Login Attempts Analysis*
+
+### Investigating Brute-force Attack Patterns
+
+Adding EventCode 4625 to the search to investigate multiple failed login attempts, indicating a potential brute-force attack.
+![Brute-force Attack Investigation](https://github.com/KennuC/ActiveDirectory/assets/131323586/f0e890d9-74b5-4198-9f43-44cb9ce15989)
+*Ref 10: Brute-force Attack Investigation*
+
+### Analyzing Successful Login Attempts
+
+Changing the EventCode to 4624 to investigate successful login attempts, revealing the attacker’s IP address and workstation name.
+![Successful Login Analysis](https://github.com/KennuC/ActiveDirectory/assets/131323586/4c729ec7-a9d8-4b5b-8165-133a9a8f251b)
+*Ref 11: Successful Login Analysis*
+
+### Simulating Attack Techniques Using Atomic Red Team
+
+Using Atomic Red Team to replicate event logs based on MITRE ATT&CK, focusing on PowerShell execution (ID: T1059.001).
+![Atomic Red Team Simulation](https://github.com/KennuC/ActiveDirectory/assets/131323586/e96ad857-6836-42ae-b50e-92bbe918dfef)
+*Ref 12: Atomic Red Team Simulation*
+
+### Verifying Attack Simulations in Splunk
+
+Searching for specific PowerShell execution patterns in Splunk to verify logging and detection.
+![PowerShell Execution Logging](https://github.com/KennuC/ActiveDirectory/assets/131323586/cc77567f-ff55-496f-878e-c92940765ac2)
+*Ref 13: PowerShell Execution Logging*
+![PowerShell Execution Logging](https://github.com/KennuC/ActiveDirectory/assets/131323586/2429c5c8-53d3-401d-b6f7-8836cd3f62c3)
+*Ref 14: PowerShell Execution Logging (Cont.)*
 
 
